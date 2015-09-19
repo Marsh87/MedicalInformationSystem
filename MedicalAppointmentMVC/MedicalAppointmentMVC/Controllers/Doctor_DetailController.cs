@@ -8,11 +8,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MedicalAppointmentMVC.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MedicalAppointmentMVC.Controllers
 {
+
     public class Doctor_DetailController : Controller
     {
+        private ApplicationDbContext context = new ApplicationDbContext();
         private MedicalContext db = new MedicalContext();
 
         // GET: Doctor_Detail
@@ -47,16 +51,51 @@ namespace MedicalAppointmentMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "doctor_id,first_name,surname,cellno,telno,address,post_code,med_practice_no,specialization")] Doctor_Detail doctor_Detail)
+        public async Task<ActionResult> Create(DoctorViewModel DoctorViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Doctor_Details.Add(doctor_Detail);
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                var user = new ApplicationUser() { UserName = DoctorViewModel.Email };
+                var result = await UserManager.CreateAsync(user, DoctorViewModel.Password);
+                string roleName = "Doctor";
+                IdentityResult roleResult;
+                if (!RoleManager.RoleExists(roleName))
+                {
+                    roleResult = RoleManager.Create(new IdentityRole(roleName));
+                }
+                try
+                {
+                    var findUser = UserManager.FindByName(DoctorViewModel.Email);
+                    UserManager.AddToRole(findUser.Id, "Doctor");
+                    context.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
+                Doctor_Detail doctor = MapDoctor(DoctorViewModel);
+                db.Doctor_Details.Add(doctor);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(doctor_Detail);
+            return View(DoctorViewModel);
+        }
+
+        private static Doctor_Detail MapDoctor(DoctorViewModel DoctorViewModel)
+        {
+            var doctor = new Doctor_Detail();
+            doctor.address = DoctorViewModel.address;
+            doctor.cellno = DoctorViewModel.cellno;
+            doctor.first_name = DoctorViewModel.first_name;
+            doctor.med_practice_no = DoctorViewModel.med_practice_no;
+            doctor.post_code = DoctorViewModel.post_code;
+            doctor.specialization = DoctorViewModel.specialization;
+            doctor.surname = DoctorViewModel.surname;
+            doctor.telno = DoctorViewModel.telno;
+            return doctor;
         }
 
         // GET: Doctor_Detail/Edit/5

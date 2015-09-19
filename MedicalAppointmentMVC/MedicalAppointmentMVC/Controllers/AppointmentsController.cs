@@ -12,6 +12,7 @@ namespace MedicalAppointmentMVC.Controllers
 {
     public class AppointmentsController : Controller
     {
+        private ApplicationDbContext context = new ApplicationDbContext();
         private MedicalContext db = new MedicalContext();
 
         // GET: Appointments

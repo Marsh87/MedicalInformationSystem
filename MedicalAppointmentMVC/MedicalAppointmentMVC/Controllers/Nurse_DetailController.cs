@@ -8,11 +8,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MedicalAppointmentMVC.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MedicalAppointmentMVC.Controllers
 {
     public class Nurse_DetailController : Controller
     {
+        private ApplicationDbContext context = new ApplicationDbContext();
         private MedicalContext db = new MedicalContext();
 
         // GET: Nurse_Detail
@@ -47,16 +50,44 @@ namespace MedicalAppointmentMVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "nurse_id,first_name,surname,cellno,telno,address,post_code,med_practice_no")] Nurse_Detail nurse_Detail)
+        public async Task<ActionResult> Create(NurseViewModel NurseViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Nurse_Details.Add(nurse_Detail);
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                var user = new ApplicationUser() { UserName = NurseViewModel.Email };
+                var result = await UserManager.CreateAsync(user, NurseViewModel.Password);
+                string roleName = "Nurse";
+                IdentityResult roleResult;
+                if (!RoleManager.RoleExists(roleName))
+                {
+                    roleResult = RoleManager.Create(new IdentityRole(roleName));
+                }
+                try
+                {
+                    var findUser = UserManager.FindByName(NurseViewModel.Email);
+                    UserManager.AddToRole(findUser.Id, "Nurse");
+                    context.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
+                var nurse = new Nurse_Detail();
+                nurse.address = NurseViewModel.address;
+                nurse.cellno = NurseViewModel.cellno;
+                nurse.first_name = NurseViewModel.first_name;
+                nurse.med_practice_no = NurseViewModel.med_practice_no;
+                nurse.post_code = NurseViewModel.post_code;
+                nurse.surname = NurseViewModel.surname;
+                nurse.telno = NurseViewModel.telno;
+                db.Nurse_Details.Add(nurse);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(nurse_Detail);
+            return View(NurseViewModel);
         }
 
         // GET: Nurse_Detail/Edit/5

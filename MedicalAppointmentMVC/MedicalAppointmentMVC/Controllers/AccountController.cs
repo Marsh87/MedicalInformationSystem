@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MedicalAppointmentMVC.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MedicalAppointmentMVC.Controllers
 {
@@ -17,7 +18,7 @@ namespace MedicalAppointmentMVC.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext context = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -151,8 +152,27 @@ namespace MedicalAppointmentMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                string roleName = "Patient";
+                IdentityResult roleResult;
+                if (!RoleManager.RoleExists(roleName))
+                {
+                    roleResult = RoleManager.Create(new IdentityRole(roleName));
+                }
+                try
+                {
+                    var findUser = UserManager.FindByName(user.UserName);
+                    UserManager.AddToRole(findUser.Id, "Patient");
+                    context.SaveChanges();
+                }
+                catch
+                {
+                    throw;
+                }
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

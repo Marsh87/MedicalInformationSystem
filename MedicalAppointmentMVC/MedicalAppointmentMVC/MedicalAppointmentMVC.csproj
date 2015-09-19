@@ -253,7 +253,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Patient_Detail\Create.cshtml" />
     <Content Include="Views\Patient_Detail\Delete.cshtml" />
     <Content Include="Views\Patient_Detail\Details.cshtml" />
     <Content Include="Views\Patient_Detail\Edit.cshtml" />
@@ -263,12 +262,10 @@
     <Content Include="Views\Appointments\Details.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
-    <Content Include="Views\Doctor_Detail\Create.cshtml" />
     <Content Include="Views\Doctor_Detail\Delete.cshtml" />
     <Content Include="Views\Doctor_Detail\Details.cshtml" />
     <Content Include="Views\Doctor_Detail\Edit.cshtml" />
     <Content Include="Views\Doctor_Detail\Index.cshtml" />
-    <Content Include="Views\Nurse_Detail\Create.cshtml" />
     <Content Include="Views\Nurse_Detail\Delete.cshtml" />
     <Content Include="Views\Nurse_Detail\Details.cshtml" />
     <Content Include="Views\Nurse_Detail\Edit.cshtml" />
@@ -278,6 +275,9 @@
     <Content Include="Views\Patient_Medical_History\Details.cshtml" />
     <Content Include="Views\Patient_Medical_History\Edit.cshtml" />
     <Content Include="Views\Patient_Medical_History\Index.cshtml" />
+    <Content Include="Views\Doctor_Detail\Create.cshtml" />
+    <Content Include="Views\Patient_Detail\Create.cshtml" />
+    <Content Include="Views\Nurse_Detail\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
