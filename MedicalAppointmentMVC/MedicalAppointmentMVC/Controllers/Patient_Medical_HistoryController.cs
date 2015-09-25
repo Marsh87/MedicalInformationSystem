@@ -11,6 +11,7 @@ using MedicalAppointmentMVC.Models;
 
 namespace MedicalAppointmentMVC.Controllers
 {
+    [Authorize(Roles = "Doctors")]
     public class Patient_Medical_HistoryController : Controller
     {
         private MedicalContext db = new MedicalContext();

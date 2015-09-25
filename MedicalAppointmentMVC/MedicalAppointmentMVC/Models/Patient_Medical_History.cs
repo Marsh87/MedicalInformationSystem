@@ -15,27 +15,27 @@ namespace MedicalAppointmentMVC.Models
         public int med_hist_id { get; set; }
 
         [Display(Name = "Patient")]
-        [Required(ErrorMessage = "Patient")]
+        [Required(ErrorMessage = "Patient is Required")]
         public int patient_id { get; set; }
 
         [Display(Name = "Diagnosis")]
-        [Required(ErrorMessage = "Diagnosis")]
+        [Required(ErrorMessage = "Diagnosis is Required")]
         public string diagnosis { get; set; }
 
         [Display(Name = "Blood Sugar Level")]
-        [Required(ErrorMessage = "Blood Sugar Level")]
+        [Required(ErrorMessage = "Blood Sugar Level is Required")]
         public string blood_sugar_level { get; set; }
 
         [Display(Name = "Cholesterol Rating")]
-        [Required(ErrorMessage = "Cholesterol Rating")]
+        [Required(ErrorMessage = "Cholesterol Rating is Required")]
         public string cholesterol_rating { get; set; }
 
         [Display(Name = "Blood Pressure")]
-        [Required(ErrorMessage = "Blood Pressure")]
+        [Required(ErrorMessage = "Blood Pressure is Required")]
         public string blood_pressure { get; set; }
 
         [Display(Name = "Recommendation")]
-        [Required(ErrorMessage = "Recommendation")]
+        [Required(ErrorMessage = "Recommendation is Required")]
         public string recommendation { get; set; }
 
         public virtual Patient_Detail Patient_Detail { get; set; }

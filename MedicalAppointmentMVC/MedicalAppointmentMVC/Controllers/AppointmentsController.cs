@@ -10,6 +10,7 @@ using MedicalAppointmentMVC.Models;
 
 namespace MedicalAppointmentMVC.Controllers
 {
+    [Authorize(Roles = "Nurse")]
     public class AppointmentsController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();

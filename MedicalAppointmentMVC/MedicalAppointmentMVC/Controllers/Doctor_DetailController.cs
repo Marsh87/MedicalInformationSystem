@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MedicalAppointmentMVC.Controllers
 {
-
+    [Authorize(Roles = "OperationsManager")]
     public class Doctor_DetailController : Controller
     {
         private ApplicationDbContext context = new ApplicationDbContext();
@@ -95,6 +95,7 @@ namespace MedicalAppointmentMVC.Controllers
             doctor.specialization = DoctorViewModel.specialization;
             doctor.surname = DoctorViewModel.surname;
             doctor.telno = DoctorViewModel.telno;
+            doctor.Email = DoctorViewModel.Email;
             return doctor;
         }
 

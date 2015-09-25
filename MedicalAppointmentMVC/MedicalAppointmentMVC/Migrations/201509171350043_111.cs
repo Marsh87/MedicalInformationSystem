@@ -85,7 +85,6 @@ namespace MedicalAppointmentMVC.Migrations
                 .PrimaryKey(t => t.med_hist_id)
                 .ForeignKey("dbo.Patient_Detail", t => t.patient_id, cascadeDelete: true)
                 .Index(t => t.patient_id);
-            
         }
         
         public override void Down()
