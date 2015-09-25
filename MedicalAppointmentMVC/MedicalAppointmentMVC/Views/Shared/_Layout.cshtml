@@ -24,13 +24,11 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Details<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li role="presentation" class="dropdown-header">All Details</li>
+                            <li role="presentation" class="dropdown-header">Details</li>
                             <li>@Html.ActionLink("Patient Details", "Index", "Patient_Detail")</li>
                             <li>@Html.ActionLink("Nurse Details", "Index", "Nurse_Detail")</li>
                             <li>@Html.ActionLink("Doctor Details", "Index", "Doctor_Detail")</li>
-
                             <li class="divider"></li>
-                            <li role="presentation" class="dropdown-header">The real Shit</li>
                             <li>@Html.ActionLink("Appointments", "Index", "Appointments")</li>
                             <li>@Html.ActionLink("Medical History", "Index", "Patient_Medical_History")</li>
 
@@ -38,10 +36,6 @@
 
                         </ul>
                     </li>
-                    
-
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
