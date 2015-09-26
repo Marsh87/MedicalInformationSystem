@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h4>Appointments</h4>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Doctor_Detail.first_name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Patient_Detail.first_name)
+            @Html.DisplayNameFor(model => model.Patient_Detail.surname)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.start_date_time)
@@ -32,18 +32,13 @@
             @Html.DisplayFor(modelItem => item.Doctor_Detail.first_name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Patient_Detail.first_name)
+            @Html.DisplayFor(modelItem => item.Patient_Detail.surname)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.start_date_time)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.end_date_time)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.app_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.app_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.app_id })
         </td>
     </tr>
 }

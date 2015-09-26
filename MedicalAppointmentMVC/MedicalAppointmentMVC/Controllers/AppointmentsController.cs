@@ -53,6 +53,16 @@ namespace MedicalAppointmentMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "app_id,patient_id,doctor_id,start_date_time,end_date_time")] Appointment appointment)
         {
+
+            if (appointment.patient_id == 0)
+            {
+                ModelState.AddModelError("pleaseselectpatient", "Please select patient");
+            }
+            if (appointment.doctor_id == 0)
+            {
+                ModelState.AddModelError("pleaseselectdoctor", "Please select Doctor");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Appointments.Add(appointment);
