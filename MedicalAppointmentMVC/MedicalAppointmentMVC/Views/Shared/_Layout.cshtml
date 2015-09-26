@@ -30,6 +30,10 @@
                             <li>@Html.ActionLink("Doctor Details", "Index", "Doctor_Detail")</li>
                             <li class="divider"></li>
                             <li>@Html.ActionLink("Appointments", "Index", "Appointments")</li>
+                            @if (User.IsInRole("Doctor"))
+                            {
+                            <li>@Html.ActionLink("My Appointments", "MyAppointments", "Doctor")</li>
+                            }
                             <li>@Html.ActionLink("Medical History", "Index", "Patient_Medical_History")</li>
 
 

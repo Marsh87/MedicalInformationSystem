@@ -11,7 +11,7 @@ using MedicalAppointmentMVC.Models;
 
 namespace MedicalAppointmentMVC.Controllers
 {
-    [Authorize(Roles = "Doctors")]
+    [Authorize(Roles = "Doctor,Nurse")]
     public class Patient_Medical_HistoryController : Controller
     {
         private MedicalContext db = new MedicalContext();
@@ -52,6 +52,11 @@ namespace MedicalAppointmentMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "med_hist_id,patient_id,diagnosis,blood_sugar_level,cholesterol_rating,blood_pressure,recommendation")] Patient_Medical_History patient_Medical_History)
         {
+            if(patient_Medical_History.patient_id==0)
+            {
+                ModelState.AddModelError("pleaseselectpatient", "Please select patient");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Patients_Medical_History.Add(patient_Medical_History);
